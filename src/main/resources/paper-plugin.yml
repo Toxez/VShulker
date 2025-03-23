@@ -9,7 +9,7 @@ permissions:
     description: Право для перезагрузки плагина
     default: op
   vshulker.bypass:
-    description: Право для размещения шалкер-боксов в эндер сундуке
+    description: Право для переноса шалкеров в эндер сундуке и тд....
     default: op
   vshulker.limit:
     description: Право для обхода ограничений шалкеров
