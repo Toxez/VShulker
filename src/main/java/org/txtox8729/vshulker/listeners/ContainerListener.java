@@ -9,9 +9,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.txtox8729.vshulker.VShulker;
+import org.txtox8729.vshulker.utils.ConfigUtil;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ContainerListener implements Listener {
 
@@ -22,23 +25,20 @@ public class ContainerListener implements Listener {
             InventoryType.ENDER_CHEST, InventoryType.SHULKER_BOX
     );
 
-    private static final Set<Material> SHULKER_BOXES = EnumSet.of(
-            Material.SHULKER_BOX, Material.WHITE_SHULKER_BOX, Material.ORANGE_SHULKER_BOX,
-            Material.MAGENTA_SHULKER_BOX, Material.LIGHT_BLUE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX,
-            Material.LIME_SHULKER_BOX, Material.PINK_SHULKER_BOX, Material.GRAY_SHULKER_BOX,
-            Material.LIGHT_GRAY_SHULKER_BOX, Material.CYAN_SHULKER_BOX, Material.PURPLE_SHULKER_BOX,
-            Material.BLUE_SHULKER_BOX, Material.BROWN_SHULKER_BOX, Material.GREEN_SHULKER_BOX,
-            Material.RED_SHULKER_BOX, Material.BLACK_SHULKER_BOX
-    );
+    private static final Set<Material> SHULKER_BOXES = Arrays.stream(Material.values())
+            .filter(material -> material.name().endsWith("_SHULKER_BOX") || material == Material.SHULKER_BOX)
+            .collect(Collectors.toSet());
 
     private static final long MESSAGE_COOLDOWN = 1000L;
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getWhoClicked() instanceof Player player) || player.hasPermission("vshulker.bypass")) return;
+        if (!(event.getWhoClicked() instanceof Player player)) return;
 
         Inventory topInventory = event.getView().getTopInventory();
         if (!isRestrictedContainer(topInventory.getType())) return;
+
+        if (player.hasPermission("vshulker.bypass")) return;
 
         boolean isShulkerInvolved = checkForShulker(event, player);
 
@@ -49,16 +49,18 @@ public class ContainerListener implements Listener {
             }
 
             event.setCancelled(true);
-            sendMessageWithCooldown(player, VShulker.noShulkerInContainerMessage);
+            sendMessageWithCooldown(player, ConfigUtil.noShulkerInContainerMessage);
         }
     }
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
-        if (!(event.getWhoClicked() instanceof Player player) || player.hasPermission("vshulker.bypass")) return;
+        if (!(event.getWhoClicked() instanceof Player player)) return;
 
         Inventory topInventory = event.getView().getTopInventory();
         if (!isRestrictedContainer(topInventory.getType())) return;
+
+        if (player.hasPermission("vshulker.bypass")) return;
 
         if (event.getOldCursor() != null && isShulkerBox(event.getOldCursor())) {
             if (isShulkerInsideContainer(event)) {
@@ -67,7 +69,7 @@ public class ContainerListener implements Listener {
             }
 
             event.setCancelled(true);
-            sendMessageWithCooldown(player, VShulker.noShulkerInContainerMessage);
+            sendMessageWithCooldown(player, ConfigUtil.noShulkerInContainerMessage);
         }
     }
 

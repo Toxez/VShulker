@@ -10,7 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.txtox8729.vshulker.VShulker;
+import org.txtox8729.vshulker.utils.ConfigUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -44,7 +46,7 @@ public class LimitListener implements Listener {
         for (int i = 0; i < inventoryContents.length; i++) {
             ItemStack item = inventoryContents[i];
             if (isShulkerBox(item)) {
-                if (++shulkerCount > VShulker.shulkerLimit) {
+                if (++shulkerCount > ConfigUtil.shulkerLimit) {
                     player.getWorld().dropItemNaturally(player.getLocation(), item.clone());
                     inventoryContents[i] = null;
                     droppedCount++;
@@ -55,8 +57,8 @@ public class LimitListener implements Listener {
         player.getInventory().setContents(inventoryContents);
 
         if (droppedCount > 0) {
-            sendMessageWithCooldown(player, VShulker.limitShulkerDroppedMessage
-                    .replace("%limit%", String.valueOf(VShulker.shulkerLimit))
+            sendMessageWithCooldown(player, ConfigUtil.limitShulkerDroppedMessage
+                    .replace("%limit%", String.valueOf(ConfigUtil.shulkerLimit))
                     .replace("%dropped%", String.valueOf(droppedCount)), true);
         }
     }
@@ -77,20 +79,18 @@ public class LimitListener implements Listener {
     public void onPlayerAttemptPickupItem(PlayerAttemptPickupItemEvent event) {
         Player player = event.getPlayer();
         if (!player.hasPermission("vshulker.limit") && isShulkerBox(event.getItem().getItemStack())) {
-            if (countShulkerBoxes(player.getInventory().getContents()) >= VShulker.shulkerLimit) {
+            if (countShulkerBoxes(player.getInventory().getContents()) >= ConfigUtil.shulkerLimit) {
                 event.setCancelled(true);
-                sendMessageWithCooldown(player, VShulker.limitShulkerReachedMessage
-                        .replace("%limit%", String.valueOf(VShulker.shulkerLimit)), false);
+                sendMessageWithCooldown(player, ConfigUtil.limitShulkerReachedMessage
+                        .replace("%limit%", String.valueOf(ConfigUtil.shulkerLimit)), false);
             }
         }
     }
 
     private int countShulkerBoxes(ItemStack[] contents) {
-        int count = 0;
-        for (ItemStack item : contents) {
-            if (isShulkerBox(item)) count++;
-        }
-        return count;
+        return (int) Arrays.stream(contents)
+                .filter(this::isShulkerBox)
+                .count();
     }
 
     @EventHandler

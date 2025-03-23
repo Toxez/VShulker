@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.txtox8729.vshulker.VShulker;
+import org.txtox8729.vshulker.utils.ConfigUtil;
 
 public class ReloadCommand implements CommandExecutor {
 
@@ -14,25 +15,25 @@ public class ReloadCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (!player.hasPermission("vshulker.admin") && !player.isOp()) {
-                player.sendMessage(VShulker.noPermissionMessage);
+                player.sendMessage(ConfigUtil.noPermissionMessage);
                 return true;
             }
         }
 
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-            ((VShulker) VShulker.plugin).reloadPlugin();
-            sender.sendMessage(VShulker.reloadSuccessMessage);
+            ConfigUtil.plugin.reloadPlugin();
+            sender.sendMessage(ConfigUtil.reloadSuccessMessage);
             return true;
         } else {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (player.hasPermission("vshulker.admin") || player.isOp()) {
-                    sender.sendMessage(VShulker.usageMessage);
+                    sender.sendMessage(ConfigUtil.usageMessage);
                 } else {
-                    sender.sendMessage(VShulker.noPermissionMessage);
+                    sender.sendMessage(ConfigUtil.noPermissionMessage);
                 }
             } else {
-                sender.sendMessage(VShulker.usageMessage);
+                sender.sendMessage(ConfigUtil.usageMessage);
             }
             return true;
         }

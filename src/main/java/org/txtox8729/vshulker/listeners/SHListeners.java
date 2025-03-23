@@ -12,6 +12,7 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.txtox8729.vshulker.VShulker;
+import org.txtox8729.vshulker.utils.ConfigUtil;
 
 import java.util.*;
 
@@ -74,7 +75,7 @@ public class SHListeners implements Listener {
     }
 
     private boolean tryAddToShulker(Player p, ItemStack item) {
-        if (!VShulker.allowedItems.contains(item.getType().toString())) {
+        if (!ConfigUtil.allowedItems.contains(item.getType().toString())) {
             return false;
         }
 
@@ -84,24 +85,28 @@ public class SHListeners implements Listener {
             BlockStateMeta meta = (BlockStateMeta) shulker.getItemMeta();
             ShulkerBox box = (ShulkerBox) meta.getBlockState();
 
+            if (box.getInventory().firstEmpty() == -1) continue;
+
             if (box.getInventory().addItem(item).isEmpty()) {
                 meta.setBlockState(box);
                 shulker.setItemMeta(meta);
                 p.updateInventory();
+                playPickupSound(p);
                 return true;
             }
         }
         return false;
     }
 
+
     private void playPickupSound(Player p) {
-        if (VShulker.pickupSoundEnabled && VShulker.pickupSound != null) {
+        if (ConfigUtil.pickupSoundEnabled && ConfigUtil.pickupSound != null) {
             p.playSound(
                     p.getLocation(),
-                    VShulker.pickupSound,
+                    ConfigUtil.pickupSound,
                     SoundCategory.PLAYERS,
-                    VShulker.pickupSoundVolume,
-                    VShulker.pickupSoundPitch
+                    ConfigUtil.pickupSoundVolume,
+                    ConfigUtil.pickupSoundPitch
             );
         }
     }
@@ -114,7 +119,7 @@ public class SHListeners implements Listener {
         if (!isShulkerBox(item)) return;
 
         boolean isCreative = p.getGameMode() == GameMode.CREATIVE;
-        boolean shulkerOpenEnabled = VShulker.shulkerOpenEnabled;
+        boolean shulkerOpenEnabled = ConfigUtil.shulkerOpenEnabled;
 
         boolean shouldOpen = false;
 
