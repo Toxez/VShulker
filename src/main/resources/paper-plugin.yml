@@ -1,0 +1,20 @@
+name: VShulker
+version: '${project.version}'
+main: org.txtox8729.vshulker.VShulker
+api-version: '1.16'
+author: [ Tox_8729 ]
+
+permissions:
+  vshulker.admin:
+    description: Право для перезагрузки плагина
+    default: op
+  vshulker.bypass:
+    description: Право для размещения шалкер-боксов в эндер сундуке
+    default: op
+  vshulker.limit:
+    description: Право для обхода ограничений шалкеров
+    default: op
+
+commands:
+  vshulker:
+    description: Команда для перезагрузки плагина
