@@ -15,7 +15,6 @@ public class ConfigUtil {
     public static float pickupSoundVolume;
     public static boolean pickupSoundEnabled;
 
-    // Переименованные поля для звука отказа
     public static Sound denySound;
     public static float denySoundPitch;
     public static float denySoundVolume;
@@ -36,7 +35,6 @@ public class ConfigUtil {
         plugin.saveDefaultConfig();
         FileConfiguration config = plugin.getConfig();
 
-        // Настройки звука для pickup
         String defaultPickupSoundName = "ENTITY_ITEM_PICKUP";
         float defaultPickupPitch = 1.2F;
         float defaultPickupVolume = 0.4F;
