@@ -140,7 +140,6 @@ public class ContainerListener implements Listener {
         return false;
     }
 
-
     private boolean isShulkerBox(ItemStack item) {
         return item != null && SHULKER_BOXES.contains(item.getType());
     }
@@ -169,6 +168,10 @@ public class ContainerListener implements Listener {
         }
 
         player.sendMessage(message);
+        if (ConfigUtil.denySoundEnabled) {
+            player.playSound(player.getLocation(), ConfigUtil.denySound,
+                    ConfigUtil.denySoundVolume, ConfigUtil.denySoundPitch);
+        }
         player.setMetadata(metaKey, new FixedMetadataValue(VShulker.getInstance(), currentTime));
     }
 }

@@ -27,7 +27,7 @@ public final class VShulker extends JavaPlugin {
         this.getCommand("vshulker").setExecutor(new ReloadCommand());
         this.getCommand("vshulker").setTabCompleter(new VTabCompleter());
 
-        getLogger().info(ChatColor.GREEN + "Плагин VShulker успешно включен!");
+        getLogger().info(ChatColor.GREEN + "Плагин VShulker успешно включен! версия: 1.1");
         getLogger().info(ChatColor.GREEN + "Автор: Tox_8729");
     }
 

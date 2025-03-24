@@ -14,6 +14,13 @@ public class ConfigUtil {
     public static float pickupSoundPitch;
     public static float pickupSoundVolume;
     public static boolean pickupSoundEnabled;
+
+    // Переименованные поля для звука отказа
+    public static Sound denySound;
+    public static float denySoundPitch;
+    public static float denySoundVolume;
+    public static boolean denySoundEnabled;
+
     public static boolean shulkerOpenEnabled;
     public static String noPermissionMessage;
     public static String reloadSuccessMessage;
@@ -29,38 +36,64 @@ public class ConfigUtil {
         plugin.saveDefaultConfig();
         FileConfiguration config = plugin.getConfig();
 
-        // Настройки звука
-        String defaultSoundName = "ENTITY_ITEM_PICKUP";
-        float defaultPitch = 1.2F;
-        float defaultVolume = 0.4F;
-        boolean defaultSoundEnabled = true;
+        // Настройки звука для pickup
+        String defaultPickupSoundName = "ENTITY_ITEM_PICKUP";
+        float defaultPickupPitch = 1.2F;
+        float defaultPickupVolume = 0.4F;
+        boolean defaultPickupSoundEnabled = true;
 
         ConfigurationSection pickupSoundSec = config.getConfigurationSection("pickupSound");
         if (pickupSoundSec != null) {
             try {
-                String soundName = pickupSoundSec.getString("sound", defaultSoundName).toUpperCase();
+                String soundName = pickupSoundSec.getString("sound", defaultPickupSoundName).toUpperCase();
                 pickupSound = Sound.valueOf(soundName);
             } catch (IllegalArgumentException e) {
                 String invalidSound = pickupSoundSec.getString("sound");
                 plugin.getLogger().warning("Ошибка конфига: звук '" + invalidSound + "' не найден!");
-                pickupSound = Sound.valueOf(defaultSoundName);
+                pickupSound = Sound.valueOf(defaultPickupSoundName);
             }
 
-            pickupSoundPitch = (float) pickupSoundSec.getDouble("pitch", defaultPitch);
-            pickupSoundVolume = (float) pickupSoundSec.getDouble("volume", defaultVolume);
-            pickupSoundEnabled = pickupSoundSec.getBoolean("enabled", defaultSoundEnabled);
+            pickupSoundPitch = (float) pickupSoundSec.getDouble("pitch", defaultPickupPitch);
+            pickupSoundVolume = (float) pickupSoundSec.getDouble("volume", defaultPickupVolume);
+            pickupSoundEnabled = pickupSoundSec.getBoolean("enabled", defaultPickupSoundEnabled);
         } else {
-            pickupSound = Sound.valueOf(defaultSoundName);
-            pickupSoundPitch = defaultPitch;
-            pickupSoundVolume = defaultVolume;
-            pickupSoundEnabled = defaultSoundEnabled;
+            pickupSound = Sound.valueOf(defaultPickupSoundName);
+            pickupSoundPitch = defaultPickupPitch;
+            pickupSoundVolume = defaultPickupVolume;
+            pickupSoundEnabled = defaultPickupSoundEnabled;
+        }
+
+        String defaultDenySoundName = "BLOCK_NOTE_BLOCK_BASS";
+        float defaultDenyPitch = 0.5F;
+        float defaultDenyVolume = 1.0F;
+        boolean defaultDenySoundEnabled = true;
+
+        ConfigurationSection denySoundSec = config.getConfigurationSection("denySound");
+        if (denySoundSec != null) {
+            try {
+                String soundName = denySoundSec.getString("sound", defaultDenySoundName).toUpperCase();
+                denySound = Sound.valueOf(soundName);
+            } catch (IllegalArgumentException e) {
+                String invalidSound = denySoundSec.getString("sound");
+                plugin.getLogger().warning("Ошибка конфига: звук '" + invalidSound + "' не найден!");
+                denySound = Sound.valueOf(defaultDenySoundName);
+            }
+
+            denySoundPitch = (float) denySoundSec.getDouble("pitch", defaultDenyPitch);
+            denySoundVolume = (float) denySoundSec.getDouble("volume", defaultDenyVolume);
+            denySoundEnabled = denySoundSec.getBoolean("enabled", defaultDenySoundEnabled);
+        } else {
+            denySound = Sound.valueOf(defaultDenySoundName);
+            denySoundPitch = defaultDenyPitch;
+            denySoundVolume = defaultDenyVolume;
+            denySoundEnabled = defaultDenySoundEnabled;
         }
 
         shulkerOpenEnabled = config.getBoolean("shulkerOpen.enabled", true);
 
         // сообщения
         noPermissionMessage = HexUtil.translate(config.getString("messages.no-permission-message", "&7[&#D21919✘&7] &7У вас &#D21919нет прав &7на выполнение этой команды!"));
-        reloadSuccessMessage = HexUtil.translate(config.getString("messages.reload-success-message", "&7[&#32CD32✔&7] &7Конфигурация &#32CD32успешно &7перезагружена!"));
+        reloadSuccessMessage = HexUtil.translate(config.getString("messages.reload-success-message", "&7[ CD32✔&7] &7Конфигурация  CD32успешно &7перезагружена!"));
         usageMessage = HexUtil.translate(config.getString("messages.usage-message", "&7[&#DBA544★&7] &fИспользование: &#DBA544/vshulker reload"));
         noShulkerInContainerMessage = HexUtil.translate(config.getString("messages.no-shulker-in-container", "&7[&#D21919✘&7] &7Вы &#D21919не можете &7положить сюда шалкер!"));
         limitShulkerReachedMessage = HexUtil.translate(config.getString("messages.limit-shulker-reached", "&7[&#D21919✘&7] &7Вы &#D21919не можете &7хранить более &6%limit% &7шалкеров в инвентаре!"));
