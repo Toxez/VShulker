@@ -1,5 +1,6 @@
 package org.txtox8729.vshulker;
 
+import com.earth2me.essentials.Essentials;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,11 +13,17 @@ import org.txtox8729.vshulker.utils.ConfigUtil;
 
 public final class VShulker extends JavaPlugin {
     private static VShulker instance;
+    private Essentials essentials;
 
     @Override
     public void onEnable() {
         instance = this;
         ConfigUtil.init(this);
+
+        if (Bukkit.getPluginManager().getPlugin("Essentials") != null) {
+            essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+        } else {
+        }
 
         Bukkit.getPluginManager().registerEvents(new SHListeners(), this);
         Bukkit.getPluginManager().registerEvents(new ContainerListener(), this);
@@ -27,7 +34,7 @@ public final class VShulker extends JavaPlugin {
         this.getCommand("vshulker").setExecutor(new ReloadCommand());
         this.getCommand("vshulker").setTabCompleter(new VTabCompleter());
 
-        getLogger().info(ChatColor.GREEN + "Плагин VShulker успешно включен! версия: 1.1");
+        getLogger().info(ChatColor.GREEN + "Плагин VShulker успешно включен! версия: 1.2");
         getLogger().info(ChatColor.GREEN + "Автор: Tox_8729");
     }
 
@@ -44,5 +51,9 @@ public final class VShulker extends JavaPlugin {
 
     public static VShulker getInstance() {
         return instance;
+    }
+
+    public Essentials getEssentials() {
+        return essentials;
     }
 }

@@ -3,6 +3,7 @@ version: '${project.version}'
 main: org.txtox8729.vshulker.VShulker
 api-version: '1.16'
 author: [ Tox_8729 ]
+softdepend: [Essentials]
 
 permissions:
   vshulker.admin:

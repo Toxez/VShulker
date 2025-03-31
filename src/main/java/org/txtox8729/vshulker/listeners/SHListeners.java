@@ -1,5 +1,6 @@
 package org.txtox8729.vshulker.listeners;
 
+import com.earth2me.essentials.Essentials;
 import org.bukkit.*;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
@@ -40,10 +41,29 @@ public class SHListeners implements Listener {
         }
     }
 
+    private boolean isVanished(Player player) {
+        Essentials essentials = VShulker.getInstance().getEssentials();
+        return essentials != null && essentials.getUser(player.getUniqueId()).isVanished();
+    }
+
+    private boolean isGodMode(Player player) {
+        Essentials essentials = VShulker.getInstance().getEssentials();
+        return essentials != null && essentials.getUser(player.getUniqueId()).isGodModeEnabled();
+    }
+
     @EventHandler
     public void onPickupAttempt(PlayerAttemptPickupItemEvent e) {
         Player p = e.getPlayer();
         ItemStack item = e.getItem().getItemStack();
+
+        if (ConfigUtil.disableAutoPickupInVanish && isVanished(p)) {
+            e.setCancelled(true);
+            return;
+        }
+        if (ConfigUtil.disableAutoPickupInGodMode && isGodMode(p)) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (p.getInventory().firstEmpty() != -1) return;
         if (isShulkerBox(item)) return;
@@ -63,6 +83,17 @@ public class SHListeners implements Listener {
                 && e.getClickedInventory() != null
                 && e.getClickedInventory().getType() == InventoryType.PLAYER
                 && isShulkerBox(e.getCurrentItem())) {
+
+            if (ConfigUtil.disableShulkerOpenInVanish && isVanished(p)) {
+                p.sendMessage(ConfigUtil.vanishShulkerOpenDeniedMessage);
+                e.setCancelled(true);
+                return;
+            }
+            if (ConfigUtil.disableShulkerOpenInGodMode && isGodMode(p)) {
+                p.sendMessage(ConfigUtil.godShulkerOpenDeniedMessage);
+                e.setCancelled(true);
+                return;
+            }
 
             if (p.getOpenInventory().getType() != InventoryType.CRAFTING) {
                 e.setCancelled(true);
@@ -98,7 +129,6 @@ public class SHListeners implements Listener {
         return false;
     }
 
-
     private void playPickupSound(Player p) {
         if (ConfigUtil.pickupSoundEnabled && ConfigUtil.pickupSound != null) {
             p.playSound(
@@ -132,6 +162,17 @@ public class SHListeners implements Listener {
         }
 
         if (shouldOpen) {
+            if (ConfigUtil.disableShulkerOpenInVanish && isVanished(p)) {
+                p.sendMessage(ConfigUtil.vanishShulkerOpenDeniedMessage);
+                e.setCancelled(true);
+                return;
+            }
+            if (ConfigUtil.disableShulkerOpenInGodMode && isGodMode(p)) {
+                p.sendMessage(ConfigUtil.godShulkerOpenDeniedMessage);
+                e.setCancelled(true);
+                return;
+            }
+
             if (!isCreative && p.getOpenInventory().getType() != InventoryType.CRAFTING) {
                 e.setCancelled(true);
                 return;

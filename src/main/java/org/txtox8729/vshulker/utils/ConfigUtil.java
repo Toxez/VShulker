@@ -30,6 +30,14 @@ public class ConfigUtil {
     public static int shulkerLimit;
     public static List<String> allowedItems;
 
+    public static boolean disableShulkerOpenInVanish;
+    public static boolean disableAutoPickupInVanish;
+    public static boolean disableShulkerOpenInGodMode;
+    public static boolean disableAutoPickupInGodMode;
+
+    public static String vanishShulkerOpenDeniedMessage;
+    public static String godShulkerOpenDeniedMessage;
+
     public static void init(VShulker pluginInstance) {
         plugin = pluginInstance;
         plugin.saveDefaultConfig();
@@ -89,7 +97,6 @@ public class ConfigUtil {
 
         shulkerOpenEnabled = config.getBoolean("shulkerOpen.enabled", true);
 
-        // сообщения
         noPermissionMessage = HexUtil.translate(config.getString("messages.no-permission-message", "&7[&#D21919✘&7] &7У вас &#D21919нет прав &7на выполнение этой команды!"));
         reloadSuccessMessage = HexUtil.translate(config.getString("messages.reload-success-message", "&7[ CD32✔&7] &7Конфигурация  CD32успешно &7перезагружена!"));
         usageMessage = HexUtil.translate(config.getString("messages.usage-message", "&7[&#DBA544★&7] &fИспользование: &#DBA544/vshulker reload"));
@@ -99,5 +106,13 @@ public class ConfigUtil {
 
         shulkerLimit = config.getInt("settings.limit-shulker-boxes", 3);
         allowedItems = config.getStringList("shulker-auto");
+
+        disableShulkerOpenInVanish = config.getBoolean("essentials-support.disable-shulker-open-in-vanish", true);
+        disableAutoPickupInVanish = config.getBoolean("essentials-support.disable-auto-pickup-in-vanish", true);
+        disableShulkerOpenInGodMode = config.getBoolean("essentials-support.disable-shulker-open-in-god-mode", true);
+        disableAutoPickupInGodMode = config.getBoolean("essentials-support.disable-auto-pickup-in-god-mode", true);
+
+        vanishShulkerOpenDeniedMessage = HexUtil.translate(config.getString("messages.vanish-shulker-open-denied", "&7[&#D21919✘&7] &7Вы &#D21919не можете &7открыть шалкер в ванише!"));
+        godShulkerOpenDeniedMessage = HexUtil.translate(config.getString("messages.god-shulker-open-denied", "&7[&#D21919✘&7] &7Вы &#D21919не можете &7открыть шалкер в режиме бога!"));
     }
 }
