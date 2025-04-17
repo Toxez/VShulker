@@ -1,0 +1,148 @@
+# ====================================================
+# Настройки плагина VShulker
+# Автор: Tox_8729
+# Версия: 1.2
+# ====================================================
+
+# Настройки звука при подборе предмета в шалкер
+# Сайт со звуками: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+pickupSound:
+  # Название звука, который будет воспроизводиться при добавлении предмета в шалкер
+  # Должно быть из списка звуков Minecraft. Примеры:
+  # ENTITY_ITEM_PICKUP (звук подбора предмета)
+  # BLOCK_NOTE_BLOCK_PLING (звук нотного блока)
+  sound: "ENTITY_ITEM_PICKUP"
+
+  # Высота тона звука
+  # 1.0 = стандартная высота
+  # 0.5 = низкий тон
+  # 2.0 = высокий тон
+  pitch: 1.2
+
+  # Громкость звука
+  # 1.0 = стандартная громкость
+  # 0.5 = тихий звук
+  # 2.0 = громкий звук
+  volume: 0.6
+
+  # Включить или отключить звук при подборе предмета
+  # true = звук включен
+  # false = звук отключен
+  enabled: true
+
+denySound:
+  # Название звука, который будет воспроизводиться при попытке положить шалкер в запрещенный сундук или еще что то
+  sound: "BLOCK_NOTE_BLOCK_BASS"
+  # Высота тона звука
+  pitch: 0.5
+  # Громкость звука
+  volume: 1.0
+  # Включить или отключить звук при попытке положить шалкер в запрещенный сундук или еще что то
+  enabled: true
+
+# Настройки открытия шалкер-бокса
+shulkerOpen:
+  # Включить или отключить возможность открытия шалкера.
+  # false = открывать шалкера на ШИФТ+ПКМ
+  # true = открывать шалкера на ПКМ
+  enabled: false
+
+# Настройки сообщений
+messages:
+  # Сообщение, которое увидит игрок, если у него нет прав на выполнение команды.
+  no-permission-message: "&7[&#DB4444✘&7] &7У вас &#DB4444нет прав &7на выполнение этой команды!"
+  # Сообщение, которое увидит игрок при успешной перезагрузке конфига.
+  reload-success-message: "&7[&#32CD32✔&7] &7Конфигурация &#32CD32успешно &7перезагружена!"
+  # Сообщение с подсказкой по использованию команды.
+  usage-message: "&7[&#DBA544★&7] &7Использование: &#DBA544/vshulker reload"
+  # Сообщение, которое увидит игрок, если он превысит лимит шалкеров в инвентаре.
+  limit-shulker-reached: "&7[&#DB4444✘&7] &7Вы не можете хранить более &6%limit% &7шалкеров в инвентаре!"
+  # Сообщение о том что все лишние шалкеры были выброшены.
+  limit-shulker-dropped: "&7[&#DB4444✘&7] &7У вас было выброшено &6%dropped% &7шалкеров, так как лимит &6%limit% &7был превышен!"
+  # Сообщение, которое увидит игрок, если попытается переместить шалкер-бокс в сундук или другое....
+  no-shulker-in-container: "&7[&#D21919✘&7] &7Вы &#DB4444не можете &7положить сюда шалкер!"
+  # Сообщение которое увидит игрок, если попытается открыть шалкер в режиме ваниша (EssentialsX).
+  vanish-shulker-open-denied: "&7[&#DB4444✘&7] &7Вы &#DB4444не можете &7открыть шалкер в ванише!"
+  # Сообщение которое увидит игрок, если попытается открыть шалкер в режиме бога (EssentialsX).
+  god-shulker-open-denied: "&7[&#DB4444✘&7] &7Вы &#DB4444не можете &7открыть шалкер в режиме бога!"
+
+# Настройки лимита шалкеров
+settings:
+  # Максимальное количество шалкеров которые можно хранить в инвентаре игрока.
+  limit-shulker-boxes: 3
+
+essentials-support:
+  # Запретить открытие шалкера в режиме ваниша EssentialsX
+  disable-shulker-open-in-vanish: true
+  # Запретить автоподбор предметов в шалкер в режиме vanish EssentialsX
+  disable-auto-pickup-in-vanish: true
+  # Запретить открытие шалкера в режиме бога EssentialsX
+  disable-shulker-open-in-god-mode: true
+  # Запретить автоподбор предметов в шалкер в режиме бога EssentialsX
+  disable-auto-pickup-in-god-mode: true
+
+# Список предметов, которые будут автоматически добавляться в шалкер
+# Добавьте сюда материалы (названия предметов из Minecraft), которые должны попадать в шалкер.
+# Примеры:
+# - STONE (камень)
+# - DIRT (земля)
+# - IRON_INGOT (железный слиток)
+# - DIAMOND (алмаз)
+# - GOLDEN_APPLE (золотое яблоко)
+# - TOTEM_OF_UNDYING (тотем бессмертия)
+# - NETHERITE_SWORD (незеритовый меч)
+# - ENCHANTED_GOLDEN_APPLE (зачарованное золотое яблоко)
+shulker-auto:
+  # Блоки
+  - OBSIDIAN
+  - DIAMOND_BLOCK
+  - GOLD_BLOCK
+  - EMERALD_BLOCK
+  - LAPIS_BLOCK
+  - NETHERITE_BLOCK
+  - TNT
+  # Руды и ресурсы
+  - IRON_INGOT
+  - GOLD_INGOT
+  - DIAMOND
+  - EMERALD
+  - NETHERITE_INGOT
+  - LAPIS_LAZULI
+  - REDSTONE
+  - COAL
+  # Броня
+  - DIAMOND_HELMET
+  - DIAMOND_CHESTPLATE
+  - DIAMOND_LEGGINGS
+  - DIAMOND_BOOTS
+  - NETHERITE_HELMET
+  - NETHERITE_CHESTPLATE
+  - NETHERITE_LEGGINGS
+  - NETHERITE_BOOTS
+  # Оружие и инструменты
+  - DIAMOND_SWORD
+  - DIAMOND_PICKAXE
+  - DIAMOND_AXE
+  - DIAMOND_SHOVEL
+  - DIAMOND_HOE
+  - NETHERITE_SWORD
+  - NETHERITE_PICKAXE
+  - NETHERITE_AXE
+  - NETHERITE_SHOVEL
+  - NETHERITE_HOE
+  # Зелья и ценные предметы
+  - GOLDEN_APPLE
+  - ENCHANTED_GOLDEN_APPLE
+  - TOTEM_OF_UNDYING
+  - ENDER_PEARL
+  - ENDER_EYE
+  - BLAZE_ROD
+  - GHAST_TEAR
+  - SHULKER_SHELL
+  # Прочее
+  - ELYTRA
+  - BEACON
+  - CONDUIT
+  - HEART_OF_THE_SEA
+  - NETHER_STAR
+  # и тд.....
